@@ -11,7 +11,7 @@ const client = new GraphQLClient(endpoint, {
 
 const SEARCH_REPOSITORIES = gql`
   query searchRepositories($queryString: String!) {
-    search(query: $queryString, type: REPOSITORY, first: 10) {
+    search(query: $queryString, type: REPOSITORY, first: 50) {
       edges {
         node {
           ... on Repository {
@@ -19,9 +19,14 @@ const SEARCH_REPOSITORIES = gql`
             name
             owner {
               login
+              avatarUrl
             }
             stargazerCount
             url
+            primaryLanguage {
+              color
+              name
+            }
           }
         }
       }

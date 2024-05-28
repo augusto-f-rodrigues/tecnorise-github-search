@@ -4,6 +4,7 @@ import { CustomTextField } from "@/components/CustomTextField";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 import { searchRepositories } from "@/services/github.service";
+import RepositoryCard from "@/components/RepositoryCard";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -24,7 +25,7 @@ export default function Home() {
       <h2 className="text-h2 mb-4">
         In the input field below, search repositories on GitHub for free
       </h2>
-      <div className="flex items-center">
+      <div className="flex w-full max-w-[500px] items-center mb-8">
         <CustomTextField
           id="search-input"
           variant="outlined"
@@ -45,23 +46,9 @@ export default function Home() {
         </IconButton>
       </div>
 
-      <div className="mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-full overflow-y-auto p-4">
         {results.map((result: any) => (
-          <div
-            key={result.node.id}
-            className="mb-2 p-2 border border-gray-300 rounded"
-          >
-            <a
-              href={result.node.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              {result.node.name}
-            </a>
-            <p>Owner: {result.node.owner.login}</p>
-            <p>Stars: {result.node.stargazerCount}</p>
-          </div>
+          <RepositoryCard key={result.node.id} repository={result} />
         ))}
       </div>
     </main>
