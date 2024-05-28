@@ -35,7 +35,7 @@ const RepositoryCard: React.FC<RepositoryCardProps> = ({ repository }) => {
             rel="noopener noreferrer"
             className="text-purple-500 underline"
           >
-            {name}
+            {name.length > 25 ? `${name.slice(0, 25)}...` : name}
           </Link>
         </h5>
         <p>Owner: {owner.login}</p>
