@@ -1,20 +1,27 @@
-"use client";
-import { CustomTextField } from "@/components/CustomTextField";
-import RepositoryCard from "@/components/RepositoryCard";
-import { searchRepositories } from "@/services/github.service";
-import SearchIcon from "@mui/icons-material/Search";
-import { IconButton } from "@mui/material";
-import { KeyboardEvent, useState } from "react";
-import { CircularProgress } from "@mui/material";
+'use client';
+import { CustomTextField } from '@/components/CustomTextField';
+import RepositoryCard from '@/components/RepositoryCard';
+import RepositoryModal from '@/components/RepositoryModal';
+import {
+  getRepositoryDetails,
+  searchRepositories,
+} from '@/services/github.service';
+import { openModal } from '@/store/modal-slice';
+import { AppDispatch } from '@/store/store';
+import SearchIcon from '@mui/icons-material/Search';
+import { CircularProgress, IconButton } from '@mui/material';
+import { KeyboardEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
 export default function Home() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSearch = async () => {
     try {
@@ -22,16 +29,24 @@ export default function Home() {
       const data = await searchRepositories(query);
       setResults(data);
     } catch (error) {
-      console.error("Error searching repositories:", error);
+      console.error('Error searching repositories:', error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleOpenModal = async (repository: any) => {
+    const repoDetails = await getRepositoryDetails({
+      owner: repository.node.owner.login,
+      name: repository.node.name,
+    });
+    dispatch(openModal(repoDetails));
   };
 
   return (
@@ -40,13 +55,13 @@ export default function Home() {
       <h2 className="text-h2 mb-4">
         In the input field below, search repositories on GitHub for free
       </h2>
-      <div className="flex w-full max-w-[500px] items-center mb-8">
+      <div className="mb-8 flex w-full max-w-[500px] items-center">
         <CustomTextField
           id="search-input"
           variant="outlined"
           label="Repository name"
           placeholder="Search GitHub repositories"
-          className="flex-grow mr-2"
+          className="mr-2 flex-grow"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
@@ -64,15 +79,23 @@ export default function Home() {
 
       {loading ? (
         <div className="flex justify-center">
-          <CircularProgress sx={{ color: fullConfig.theme.colors.purple['500'] }} />
+          <CircularProgress
+            sx={{ color: fullConfig.theme.colors.purple['500'] }}
+          />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-full overflow-y-auto p-4">
+        <div className="grid max-h-full grid-cols-1 gap-4 overflow-y-auto p-4 md:grid-cols-2 lg:grid-cols-3">
           {results.map((result: any) => (
-            <RepositoryCard key={result.node.id} repository={result} />
+            <RepositoryCard
+              key={result.node.id}
+              repository={result}
+              onClick={() => handleOpenModal(result)}
+            />
           ))}
         </div>
       )}
+
+      <RepositoryModal />
     </main>
   );
 }

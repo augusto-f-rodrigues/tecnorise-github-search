@@ -9,12 +9,12 @@ body {
 
 @layer utilities {
   .main-container {
-    @apply flex flex-col justify-center items-center w-full h-full p-4;
+    @apply flex h-full w-full flex-col items-center justify-center p-4;
   }
   .text-h1 {
-    @apply text-2xl font-extrabold text-center lg:text-4xl;
+    @apply text-center text-2xl font-extrabold lg:text-4xl;
   }
   .text-h2 {
-    @apply text-center font-normal lg:text-2xl text-neutral-700;
+    @apply text-center font-normal text-neutral-700 lg:text-2xl;
   }
 }

@@ -1,6 +1,10 @@
-import { GraphQLClient, gql } from "graphql-request";
+import {
+  GET_REPOSITORY_DETAILS_QUERY,
+  SEARCH_REPOSITORIES_QUERY,
+} from '@/graphql/repository.query';
+import { GraphQLClient } from 'graphql-request';
 
-const endpoint = "https://api.github.com/graphql";
+const endpoint = 'https://api.github.com/graphql';
 const gitHubAccessKey = process.env.NEXT_PUBLIC_GH_ACCESS_KEY;
 
 const client = new GraphQLClient(endpoint, {
@@ -9,33 +13,22 @@ const client = new GraphQLClient(endpoint, {
   },
 });
 
-const SEARCH_REPOSITORIES = gql`
-  query searchRepositories($queryString: String!) {
-    search(query: $queryString, type: REPOSITORY, first: 50) {
-      edges {
-        node {
-          ... on Repository {
-            id
-            name
-            owner {
-              login
-              avatarUrl
-            }
-            stargazerCount
-            url
-            primaryLanguage {
-              color
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const searchRepositories = async (queryString: string) => {
   const variables = { queryString };
-  const response: any = await client.request(SEARCH_REPOSITORIES, variables);
+  const response: any = await client.request(
+    SEARCH_REPOSITORIES_QUERY,
+    variables,
+  );
   return response.search.edges;
+};
+
+export const getRepositoryDetails = async (queryString: {
+  owner: string;
+  name: string;
+}) => {
+  const response: any = await client.request(
+    GET_REPOSITORY_DETAILS_QUERY,
+    queryString,
+  );
+  return response.repository;
 };

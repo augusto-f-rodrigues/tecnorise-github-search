@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
-import "./globals.css";
+import Providers from '@/components/Providers';
+import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
+import './globals.css';
 
 const roboto = Roboto({
   weight: ['100', '300', '400', '500', '700', '900'],
@@ -9,8 +10,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Tecnorise - GitHub Search",
-  description: "Aplicação web para pesquisa de repositórios do github desenvolvida por Augusto Felipe Rodrigues",
+  title: 'Tecnorise - GitHub Search',
+  description:
+    'Aplicação web para pesquisa de repositórios do github desenvolvida por Augusto Felipe Rodrigues',
 };
 
 export default function RootLayout({
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

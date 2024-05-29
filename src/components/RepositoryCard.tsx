@@ -1,6 +1,6 @@
-import { Card, CardMedia } from "@mui/material";
-import Link from "next/link";
-import React from "react";
+import { Card, CardContent, CardMedia } from '@mui/material';
+import Link from 'next/link';
+import React from 'react';
 
 interface RepositoryCardProps {
   repository: {
@@ -13,49 +13,58 @@ interface RepositoryCardProps {
       };
       stargazerCount: number;
       url: string;
-      primaryLanguage?: {
+      primaryLanguage: {
         color: string;
         name: string;
-      };
+      } | null;
     };
   };
+  onClick: () => void;
 }
 
-const RepositoryCard: React.FC<RepositoryCardProps> = ({ repository }) => {
+const RepositoryCard: React.FC<RepositoryCardProps> = ({
+  repository,
+  onClick,
+}) => {
   const { name, owner, stargazerCount, url, primaryLanguage } = repository.node;
 
   return (
-    <Card className="mb-2 h-28 flex items-center justify-between p-4">
-      <div className="flex flex-col flex-grow">
+    <Card className="mb-2 h-56 cursor-pointer" onClick={onClick}>
+      <CardContent>
         <h5>
           <Link
             href={url}
-            passHref
             target="_blank"
             rel="noopener noreferrer"
-            className="text-purple-500 underline"
+            className="text-blue-500"
           >
-            {name.length > 25 ? `${name.slice(0, 25)}...` : name}
+            {name.length > 40 ? `${name.slice(0, 40)}...` : name}
           </Link>
         </h5>
         <p>Owner: {owner.login}</p>
         <p>Stars: {stargazerCount}</p>
         {primaryLanguage && (
-          <div className="flex items-center mt-2">
+          <p>
+            Primary Language: {primaryLanguage.name}
             <span
-              className="inline-block w-3 h-3 rounded-full"
-              style={{ backgroundColor: primaryLanguage.color }}
+              style={{
+                backgroundColor: primaryLanguage.color,
+                borderRadius: '50%',
+                display: 'inline-block',
+                height: '10px',
+                marginLeft: '8px',
+                width: '10px',
+              }}
             ></span>
-            <span className="ml-2">{primaryLanguage.name}</span>
-          </div>
+          </p>
         )}
-      </div>
-      <CardMedia
-        component="img"
-        image={owner.avatarUrl}
-        alt={`${owner.login}'s avatar`}
-        className="h-16 w-16 rounded-full ml-4"
-      />
+        <CardMedia
+          component="img"
+          image={owner.avatarUrl}
+          alt={`${owner.login}'s avatar`}
+          className="ml-auto mt-4 h-16 w-16 rounded-full"
+        />
+      </CardContent>
     </Card>
   );
 };
