@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tecnorise - GitHub Search
 
-## Getting Started
+Este projeto é uma aplicação desenvolvida em Next Js o conceito mobile-first para a pesquisa de repositórios GitHub.
 
-First, run the development server:
+## Índice
+
+- [Recursos Principais](#recursos-principais)
+- [Recursos Extras](#recursos-extras)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Scripts Disponíveis](#scripts-disponíveis)
+
+## Recursos Principais
+
+- Pesquisa de Repositórios GitHub: Pesquisa repositórios por nome usando a API GraphQL do GitHub.
+- Exibição de Resultados: Lista repositórios com nome do repositório, nome do autor, foto de perfil e a principal tecnologia usada no repositório.
+- Detalhes do Repositório: Modal com informações detalhadas ao clicar em um repositório.
+- Interface Responsiva: Design mobile-first, adaptável a diferentes dispositivos.
+- Feedback de Carregamento: Indicador visual durante a busca de dados.
+- Gestão de Estado com Redux: Uso do Redux Toolkit para gerenciamento eficiente do estado.
+
+## Tecnologias Utilizadas
+
+- [Next.js](https://nextjs.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Material UI](https://mui.com/)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [GraphQL](https://graphql.org/)
+
+## Pré-requisitos
+
+Certifique-se de ter o Node.js e o npm instalados.
+
+## Instalação
+
+Clone o repositório e instale as dependências:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/augusto-f-rodrigues/tecnorise-github-search
+cd tecnorise-github-search
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts Disponíveis
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `npm run dev`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Cria a build de produção da aplicação.
+- `npm run start`: Inicia o servidor da aplicação em modo de produção.
+- `npm run lint`: Executa a verificação de lint para encontrar e corrigir problemas no código.
